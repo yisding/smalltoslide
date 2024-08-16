@@ -1,3 +1,6 @@
 ve/*
 .DS_Store
 .ipynb_checkpoints/*
+rag_backend/build/*
+rag_backend/node_modules/*
+.eslintcache
