@@ -105,7 +105,7 @@ export default function Home() {
       <p>Embed small, retrieve images, generate with Multimodal LLMs</p>
 
       <form className="mt-4 flex flex-row gap-x-2" onSubmit={handleSubmit}>
-        <Input id="query" placeholder="What was the EU's climate plan?" />
+        <Input id="query" placeholder="Ex: What was the EU's climate plan?" />
         <Button type="submit">Submit Query</Button>
       </form>
 
