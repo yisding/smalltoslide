@@ -1,0 +1,8 @@
+Where is NVIDIA's headquarters?
+What application frameworks does NVIDIA support?
+What is Amdahl's law?
+What's going on with Moore's Law?
+How many TFLOPs does Blackwell have?
+What was the first wave of adoption for accelerated computing?
+What is NVIDIA DGX Cloud?
+How many CUDA downloads were there in 2024?
