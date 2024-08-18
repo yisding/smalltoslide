@@ -2,42 +2,53 @@ import { MilvusClient } from '@zilliz/milvus2-sdk-node';
 
 
 // Chunks to release to the front-end
-interface Chunk {
-    text: string,
-    page_num: number
+export type Chunk = {
+    text: string;
+    page_num: number;
 }
 
-
-export const getChunks = async () => {
-
-    // Value to be passed in. Dummies for now
-    const query: number[] = [1,2,3]
-
-
+// Params:
+// Embedding - depending on the dimension, we can choose which collection to query
+export const getChunks = async (embedding: number[]) :  Promise<Chunk[]> => {
 
     const uri = process.env.ZILLIZ_URI;
     const token = process.env.ZILLIZ_API_KEY;
+
+    // Throws error if we don't have any keys
     if (!uri || !token) {
-        console.error('Zilliz Cloud URI or API key is missing. Please check your environment variables.');
-    } else {
-        const client = new MilvusClient({
-            address: uri,
-            token: token
-        });
+        throw new Error('Zilliz Cloud URI or API key is missing. Please check your environment variables.');
+    }
+
+
+    const client = new MilvusClient({
+        address: uri,
+        token: token
+    });
 
     // Wait for the connection to be established
     await client.connectPromise;
 
+    // Load in specific collection
+    // Change the collection name based on the embedding dimension
+    // TODO: Conditional assignment of collection_name
+    const collection_name: string = "nvda_demo_collection";
+    await client.loadCollectionSync({ collection_name: collection_name });
+
 
     // Load the correct VDB collection
-    const collection = await client.loadCollection({
-        collection_name: "book",
-      });
+    const results = await client.search({
+        collection_name: collection_name,
+        vector: embedding, // Your query vector
+        //filter: 'age > 0', // Optional filter
+        output_fields: ['content', 'page_number'], // Fields to return in results
+        limit: 3, // Number of results to return
+    })
 
-    // TODO: Proceed from here
-
-
-    // Take the embedding, return the top 3 chunks
-
+    const chunks: Chunk[] = results.results.map((result) => {
+        return {
+            text: result.content,
+            page_num: result.page_number
+        };
+    });
+    return chunks;
     }
-}
