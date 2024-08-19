@@ -20,3 +20,9 @@ export type ChunkBundle = {
         s2s: string;
     };
 };
+
+// Schema for re
+export type RagRequestJSON = {
+    query: string,
+    option: DocumentOption
+}
