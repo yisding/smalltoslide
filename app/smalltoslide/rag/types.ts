@@ -21,7 +21,7 @@ export type ChunkBundle = {
     };
 };
 
-// Schema for re
+// Schema for request input
 export type RagRequestJSON = {
     query: string,
     option: DocumentOption
