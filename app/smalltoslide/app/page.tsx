@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Result } from "@/components/section/result";
 import { DocumentOption, ChunkBundle, RagRequestJSON } from "@/common/types";
+import path from 'path';
+
 
 interface FormElements extends HTMLFormControlsCollection {
   query: HTMLInputElement;
@@ -73,12 +75,24 @@ export default function Home() {
       },
       body: JSON.stringify({
         query: e.currentTarget.elements.query.value,
+        // Hardcoded Document Name
         option: DocumentOption.Nvidia
-        
       }),
-    }).then((res) => res.json())
-    .then((value) => {
-      console.warn(value);
+    })
+    .then((res) => res.json())
+    .then((value: ChunkBundle) => {
+
+      const pageNums = value.pageNumbers;
+      const imageURLs = pageNums.map(num => `/nvda_page_${num}.jpg`);
+      setRagImages(imageURLs)
+      setStsImages(imageURLs);
+
+      setRagResponse(value.ragResults.regular);
+      setStsResponse(value.ragResults.s2s);
+
+    })
+    .catch((error) => {
+      console.error("Fetch failed:", error);
     });
     // const colPaliRes = fetch("/api/colpali", {
     //   method: "POST",

@@ -32,6 +32,7 @@ export async function POST(request: Request) {
   const reqJSON: RagRequestJSON = await request.json();
 
   const result: ChunkBundle = await query(reqJSON.query, reqJSON.option);
+  console.log(result);
 
   //return new Response(`Hello from ${process.env.VERCEL_REGION}`);
   return new Response(JSON.stringify(result));
