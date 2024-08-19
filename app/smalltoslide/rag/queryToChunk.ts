@@ -9,6 +9,7 @@ import { readFileSync as readFile } from 'fs';
 // (query: str, imageOption: literal["Nvidia", "Climate Youth"])
 export const query = async () => {
 
+    // These should be parameters that are passed into the query() function
     const input_str: string = "How is Nvidia doing so far?";
     const imageOption: DocumentOption = DocumentOption.Nvidia;
 
@@ -28,7 +29,7 @@ export const query = async () => {
 
 
     // pass images into openAI llm
-    // Use GPT 4o-mini for now, switch to 4o-large at demo time
+    // Use GPT 4o-mini for now, switch to 4o-large at demo time. Warning: We use ~100k tokens for the image inputs
 
 
     // Do some multi-modal input to GPT-4o mini
