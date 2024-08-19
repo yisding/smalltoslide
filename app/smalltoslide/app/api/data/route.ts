@@ -1,4 +1,4 @@
-import {query} from '@/rag/query_to_chunk';
+import {query} from '@/rag/queryToChunk';
 import {ChunkBundle} from '@/rag/types';
 export const dynamic = 'force-dynamic'; // static by default, unless reading the request
 

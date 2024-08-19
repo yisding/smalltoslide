@@ -12,3 +12,11 @@ export enum DocumentOption {
     Nvidia = "Nvidia",
     ClimateYouth = "Climate Youth"
   }
+export type ChunkBundle = {
+    pageNumbers: number[];
+    ragResults: {
+        // TODO: Add ColPali
+        regular: string;
+        s2s: string;
+    };
+};
