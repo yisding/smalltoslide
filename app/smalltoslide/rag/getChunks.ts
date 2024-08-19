@@ -1,15 +1,10 @@
 import { MilvusClient } from '@zilliz/milvus2-sdk-node';
+import { Chunk } from './types';
 
-
-// Chunks to release to the front-end
-export type Chunk = {
-    text: string;
-    page_num: number;
-}
 
 // Params:
 // Embedding - depending on the dimension, we can choose which collection to query
-export const getChunks = async (embedding: number[]) :  Promise<Chunk[]> => {
+export const getMilvusChunks = async (embedding: number[]) :  Promise<Chunk[]> => {
 
     const uri = process.env.ZILLIZ_URI;
     const token = process.env.ZILLIZ_API_KEY;
