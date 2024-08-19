@@ -1,17 +1,15 @@
 
 // Chunks to release to the front-end
-
-
 export type Chunk = {
     text: string;
     page_num: number;
 };
-
 // Choosing which document to pick
+
 export enum DocumentOption {
     Nvidia = "Nvidia",
     ClimateYouth = "Climate Youth"
-  }
+}
 export type ChunkBundle = {
     pageNumbers: number[];
     ragResults: {
@@ -20,9 +18,9 @@ export type ChunkBundle = {
         s2s: string;
     };
 };
-
 // Schema for request input
+
 export type RagRequestJSON = {
-    query: string,
-    option: DocumentOption
-}
+    query: string;
+    option: DocumentOption;
+};

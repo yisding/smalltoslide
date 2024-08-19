@@ -1,5 +1,5 @@
 import {query} from '@/rag/queryToChunk';
-import {ChunkBundle, DocumentOption, RagRequestJSON} from '@/rag/types';
+import { ChunkBundle, DocumentOption, RagRequestJSON } from "@/common/types";
 export const dynamic = 'force-dynamic'; // static by default, unless reading the request
 
 

@@ -1,4 +1,4 @@
-import { Chunk } from './types';
+import { Chunk } from "@/common/types";
 
 // Vanilla RAG prompt.
 export const ragPrompt = (query: string, chunks: Chunk[]) : string => {

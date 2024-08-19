@@ -1,10 +1,10 @@
 import { MilvusClient } from '@zilliz/milvus2-sdk-node';
-import { Chunk } from './types';
+import { Chunk, DocumentOption } from "@/common/types";
 
 
 // Params:
 // Embedding - depending on the dimension, we can choose which collection to query
-export const getMilvusChunks = async (embedding: number[]) :  Promise<Chunk[]> => {
+export const getMilvusChunks = async (embedding: number[], imageOption: DocumentOption) :  Promise<Chunk[]> => {
 
     const uri = process.env.ZILLIZ_URI;
     const token = process.env.ZILLIZ_API_KEY;
@@ -34,6 +34,7 @@ export const getMilvusChunks = async (embedding: number[]) :  Promise<Chunk[]> =
     const results = await client.search({
         collection_name: collection_name,
         vector: embedding, // Your query vector
+        filter: imageOption === DocumentOption.Nvidia ? 'doc_name == "NVDA demo PDF"' : 'doc_name == "Climate Youth Magazine PDF"',
         //filter: 'age > 0', // Optional filter
         output_fields: ['content', 'page_number'], // Fields to return in results
         limit: 3, // Number of results to return

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Result } from "@/components/section/result";
+import { DocumentOption, ChunkBundle, RagRequestJSON } from "@/common/types";
 
 interface FormElements extends HTMLFormControlsCollection {
   query: HTMLInputElement;
@@ -40,6 +41,7 @@ export default function Home() {
     } else {
       window.alert("Submitting!");
 
+
       setRagImages([
         "https://placehold.co/600x400",
         "https://placehold.co/600x400",
@@ -64,15 +66,20 @@ export default function Home() {
       );
     }
 
-    // const ragRes = fetch("/api/rag", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     query: e.currentTarget.elements.query.value,
-    //   }),
-    // });
+    const ragRes = fetch("/api/data", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: e.currentTarget.elements.query.value,
+        option: DocumentOption.Nvidia
+        
+      }),
+    }).then((res) => res.json())
+    .then((value) => {
+      console.warn(value);
+    });
     // const colPaliRes = fetch("/api/colpali", {
     //   method: "POST",
     //   headers: {
@@ -105,7 +112,7 @@ export default function Home() {
       <p>Embed small, retrieve images, generate with Multimodal LLMs</p>
 
       <form className="mt-4 flex flex-row gap-x-2" onSubmit={handleSubmit}>
-        <Input id="query" placeholder="Ex: What was the EU's climate plan?" />
+        <Input id="query" placeholder="Ex: How many teraflops does Nvidia's latest GPU get?" />
         <Button type="submit">Submit Query</Button>
       </form>
 

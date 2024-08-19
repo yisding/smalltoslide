@@ -1,7 +1,7 @@
 import { OpenAI, OpenAIEmbedding} from "llamaindex";
 import { OpenAI as OAI} from "openai";
 import {getMilvusChunks} from '@/rag/getChunks';
-import { Chunk, DocumentOption, ChunkBundle} from '@/rag/types';
+import { Chunk, DocumentOption, ChunkBundle } from "@/common/types";
 import { ragPrompt, smallToSlidePrompt } from "@/rag/synthPrompt";
 import path from 'path';
 import { readFileSync as readFile } from 'fs';
@@ -20,7 +20,7 @@ export const query = async (input_str: string, imageOption: DocumentOption) => {
     // Get relevant chunks from Zilliz VDB
 
     // This works for regular + small-to-slide
-    const results: Chunk[] = await getMilvusChunks(embeddings);
+    const results: Chunk[] = await getMilvusChunks(embeddings, imageOption);
     console.log("GOT EMBEDDINGS");
     console.log(results);
 
@@ -56,18 +56,19 @@ export const query = async (input_str: string, imageOption: DocumentOption) => {
 
     const response = await llm.chat({messages});
 
+    const multiModalMessages = [
+      {
+        role: "user",
+        content: [
+          { type: "text", text: smallToSlidePrompt(input_str) },
+          ...imageObjects
+        ]
+      }
+    ];
     
     const mmResponse = await multiModalLLM.chat.completions.create({
         model: "gpt-4o-mini",
-        messages: [
-          {
-            role: "user",
-            content: [
-              { type: "text", text: smallToSlidePrompt(input_str) },
-              ...imageObjects
-            ]
-          }
-        ],
+        messages: multiModalMessages,
         max_tokens: 2048
       });
 
@@ -75,7 +76,7 @@ export const query = async (input_str: string, imageOption: DocumentOption) => {
 
     console.log("Query: ");
     console.log("SOMETHING");
-    // console.log(mmResponse.choices[0].message.content);
+    console.log(mmResponse.choices[0].message.content);
     console.log(response);
 
 
