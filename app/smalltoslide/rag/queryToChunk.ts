@@ -7,11 +7,11 @@ import path from 'path';
 import { readFileSync as readFile } from 'fs';
 
 // (query: str, imageOption: literal["Nvidia", "Climate Youth"])
-export const query = async () => {
+export const query = async (input_str: string, imageOption: DocumentOption) => {
 
     // These should be parameters that are passed into the query() function
-    const input_str: string = "How is Nvidia doing so far?";
-    const imageOption: DocumentOption = DocumentOption.Nvidia;
+    // const input_str: string = "How is Nvidia doing so far?";
+    // const imageOption: DocumentOption = DocumentOption.Nvidia;
 
     //Embed the query
     const embedModel = new OpenAIEmbedding();
@@ -31,10 +31,6 @@ export const query = async () => {
     // pass images into openAI llm
     // Use GPT 4o-mini for now, switch to 4o-large at demo time. Warning: We use ~100k tokens for the image inputs
 
-
-    // Do some multi-modal input to GPT-4o mini
-
-
     // Set up LLM/Multi-modal LLM
     const settings = { model: "gpt-4o-mini", temperature: 0 };
     const llm = new OpenAI(settings);
@@ -46,7 +42,7 @@ export const query = async () => {
         {content: ragPrompt(input_str, results), role: "user" as "user"}
     ];
 
-    // TODO: Chunks -> URLs, depending on value of imageOption
+    // Chunks -> URLs, depending on value of imageOption
     // TODO: Ignore the linting error for now.
     const imageBaseURL: string = imageOption === DocumentOption.ClimateYouth ? "climate_youth_page_" : "nvda_page_";
     const urls: string[] = results.map(chunk => path.join(process.cwd(), 'public', imageBaseURL + chunk.page_num + ".jpg"));
