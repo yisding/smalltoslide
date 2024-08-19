@@ -10,7 +10,8 @@ const embeddings = JSON.parse(data);
 const openai = new OpenAI();
 
 // const query = "How many TFLOPS does the 2024 chip have?";
-const query = "How many times has GPU-Computing gone up in 10 years?";
+// const query = "How many times has GPU-Computing gone up in 10 years?";
+const query = "How much have CUDA downloads gone up by between 2021 and 2024?";
 
 const response = await openai.embeddings.create({
   model: "text-embedding-ada-002",
