@@ -6,8 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Result } from "@/components/section/result";
 import { DocumentOption, ChunkBundle, RagRequestJSON } from "@/common/types";
-import path from 'path';
-
 
 interface FormElements extends HTMLFormControlsCollection {
   query: HTMLInputElement;
@@ -41,59 +39,49 @@ export default function Home() {
     if (!e.currentTarget.elements.query.value) {
       window.alert("Empty query");
     } else {
-      window.alert("Submitting!");
+      // window.alert("Submitting!");
 
+      const ragRes = fetch("/api/data", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query: e.currentTarget.elements.query.value,
+        }),
+      })
+        .then((res) => res.json())
+        .then((value) => {
+          setRagImages(value.rag.images);
+          setRagResponse(value.rag.response);
+          setStsImages(value.sts.images);
+          setStsResponse(value.sts.response);
+        });
 
-      setRagImages([
-        "https://placehold.co/600x400",
-        "https://placehold.co/600x400",
-        "https://placehold.co/600x400",
-      ]);
-      setRagResponse("This is the LLM response using the RAG method.");
+      // setRagImages([
+      //   "https://placehold.co/600x400",
+      //   "https://placehold.co/600x400",
+      //   "https://placehold.co/600x400",
+      // ]);
+      // setRagResponse("This is the LLM response using the RAG method.");
 
-      setColPaliImages([
-        "https://placehold.co/600x400",
-        "https://placehold.co/600x400",
-        "https://placehold.co/600x400",
-      ]);
-      setColPaliResponse("This is the LLM response using the ColPali method.");
+      // setColPaliImages([
+      //   "https://placehold.co/600x400",
+      //   "https://placehold.co/600x400",
+      //   "https://placehold.co/600x400",
+      // ]);
+      // setColPaliResponse("This is the LLM response using the ColPali method.");
 
-      setStsImages([
-        "https://placehold.co/600x400",
-        "https://placehold.co/600x400",
-        "https://placehold.co/600x400",
-      ]);
-      setStsResponse(
-        "This is the LLM response using the Small to Slide method.",
-      );
+      // setStsImages([
+      //   "https://placehold.co/600x400",
+      //   "https://placehold.co/600x400",
+      //   "https://placehold.co/600x400",
+      // ]);
+      // setStsResponse(
+      //   "This is the LLM response using the Small to Slide method.",
+      // );
     }
 
-    const ragRes = fetch("/api/data", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        query: e.currentTarget.elements.query.value,
-        // Hardcoded Document Name
-        option: DocumentOption.Nvidia
-      }),
-    })
-    .then((res) => res.json())
-    .then((value: ChunkBundle) => {
-
-      const pageNums = value.pageNumbers;
-      const imageURLs = pageNums.map(num => `/nvda_page_${num}.jpg`);
-      setRagImages(imageURLs)
-      setStsImages(imageURLs);
-
-      setRagResponse(value.ragResults.regular);
-      setStsResponse(value.ragResults.s2s);
-
-    })
-    .catch((error) => {
-      console.error("Fetch failed:", error);
-    });
     // const colPaliRes = fetch("/api/colpali", {
     //   method: "POST",
     //   headers: {
@@ -126,19 +114,18 @@ export default function Home() {
       <p>Embed small, retrieve images, generate with Multimodal LLMs</p>
 
       <form className="mt-4 flex flex-row gap-x-2" onSubmit={handleSubmit}>
-        <Input id="query" placeholder="Ex: How many teraflops does Nvidia's latest GPU get?" />
+        <Input
+          id="query"
+          placeholder="Ex: How many teraflops does Nvidia's latest GPU get?"
+        />
         <Button type="submit">Submit Query</Button>
       </form>
 
       <h2 className="mt-4 text-xl font-semibold">Results</h2>
-      <div className="mt-2 grid grid-cols-1 gap-y-4 lg:grid-cols-3 lg:gap-x-2">
+      <div className="mt-2 grid grid-cols-1 gap-y-4 lg:grid-cols-2 lg:gap-x-2">
         <div className="rounded border border-blue-400 p-4">
           <h2 className="text-xl font-semibold">RAG</h2>
           <Result images={ragImages} response={ragResponse} />
-        </div>
-        <div className="rounded border border-blue-600 p-4">
-          <h2 className="text-xl font-semibold">ColPali</h2>
-          <Result images={colPaliImages} response={colPaliResponse} />
         </div>
         <div className="rounded border border-blue-800 p-4">
           <h2 className="text-xl font-semibold">Small to Slide</h2>

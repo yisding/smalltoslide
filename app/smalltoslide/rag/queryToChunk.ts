@@ -3,7 +3,7 @@
 // import {getMilvusChunks} from '@/rag/getChunks';
 // import { Chunk, DocumentOption, ChunkBundle } from "@/common/types";
 // import { ragPrompt, smallToSlidePrompt } from "@/rag/synthPrompt";
-// import { readFileSync as readFile } from 'fs';
+import { readFileSync as readFile } from "fs";
 
 import path from "path";
 import { OpenAI } from "openai";
@@ -13703,7 +13703,7 @@ export const query = async (query: string) => {
 
   const ragPrompt =
     "Using the following context:\n\n" +
-    similarities.map((s) => slides[s.slide]).join("\n\n") +
+    similarities.map((s) => slides[s.slide - 1]).join("\n\n") +
     "\n\n" +
     "Answer this query: " +
     query;
@@ -13722,10 +13722,15 @@ export const query = async (query: string) => {
     "Using the following images, answer this query: " + query;
 
   const imageInput = similarities.map((s) => ({
-    type: "image_url",
-    url:
-      "data:image/jpeg;base64," +
-      path.join(process.cwd(), "public", "nvda_page_" + s.slide + ".jpg"),
+    type: "image_url" as "image_url",
+    image_url: {
+      url:
+        "data:image/jpeg;base64," +
+        readFile(
+          path.join(process.cwd(), "public", "nvda_page_" + s.slide + ".jpg"),
+          "base64",
+        ),
+    },
   }));
 
   const multimodalResponse = await openai.chat.completions.create({
@@ -13733,10 +13738,25 @@ export const query = async (query: string) => {
     messages: [
       {
         role: "user",
-        content: [{ type: "text", text: multimodalPrompt }],
+        content: [{ type: "text", text: multimodalPrompt }, ...imageInput],
       },
     ],
   });
+
+  const imageUrls = similarities.map(
+    (s) => "/" + "nvda_page_" + s.slide + ".jpg",
+  );
+
+  return {
+    rag: {
+      images: imageUrls,
+      response: ragResponse.choices[0].message.content,
+    },
+    sts: {
+      images: imageUrls,
+      response: multimodalResponse.choices[0].message.content,
+    },
+  };
 };
 
 // // (query: str, imageOption: literal["Nvidia", "Climate Youth"])
