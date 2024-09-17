@@ -13701,9 +13701,11 @@ export const query = async (query: string) => {
     .sort((a, b) => b.similarity - a.similarity)
     .slice(0, 3);
 
+  const context = similarities.map((s) => slides[s.slide - 1]).join("\n\n");
+
   const ragPrompt =
     "Using the following context:\n\n" +
-    similarities.map((s) => slides[s.slide - 1]).join("\n\n") +
+    context +
     "\n\n" +
     "Answer this query: " +
     query;
@@ -13749,7 +13751,7 @@ export const query = async (query: string) => {
 
   return {
     rag: {
-      images: imageUrls,
+      context: context,
       response: ragResponse.choices[0].message.content,
     },
     sts: {

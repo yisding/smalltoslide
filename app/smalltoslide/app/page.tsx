@@ -15,7 +15,8 @@ interface QueryFormElement extends HTMLFormElement {
 }
 
 export default function Home() {
-  const [ragImages, setRagImages] = useState<string[] | undefined>(undefined);
+  const [requestPending, setRequestPending] = useState(false);
+  const [ragContext, setRagContext] = useState<string | undefined>(undefined);
   const [ragResponse, setRagResponse] = useState<string | undefined>(undefined);
   const [colPaliImages, setColPaliImages] = useState<string[] | undefined>(
     undefined,
@@ -29,7 +30,7 @@ export default function Home() {
   const handleSubmit = (e: React.FormEvent<QueryFormElement>) => {
     e.preventDefault();
 
-    setRagImages(undefined);
+    setRagContext(undefined);
     setRagResponse(undefined);
     setColPaliImages(undefined);
     setColPaliResponse(undefined);
@@ -41,6 +42,7 @@ export default function Home() {
     } else {
       // window.alert("Submitting!");
 
+      setRequestPending(true);
       const ragRes = fetch("/api/data", {
         method: "POST",
         headers: {
@@ -52,7 +54,8 @@ export default function Home() {
       })
         .then((res) => res.json())
         .then((value) => {
-          setRagImages(value.rag.images);
+          setRequestPending(false);
+          setRagContext(value.rag.context);
           setRagResponse(value.rag.response);
           setStsImages(value.sts.images);
           setStsResponse(value.sts.response);
@@ -118,14 +121,16 @@ export default function Home() {
           id="query"
           placeholder="Ex: How many teraflops does Nvidia's latest GPU get?"
         />
-        <Button type="submit">Submit Query</Button>
+        <Button type="submit" disabled={requestPending}>
+          Submit Query
+        </Button>
       </form>
 
       <h2 className="mt-4 text-xl font-semibold">Results</h2>
       <div className="mt-2 grid grid-cols-1 gap-y-4 lg:grid-cols-2 lg:gap-x-2">
         <div className="rounded border border-blue-400 p-4">
           <h2 className="text-xl font-semibold">RAG</h2>
-          <Result images={ragImages} response={ragResponse} />
+          <Result context={ragContext} response={ragResponse} />
         </div>
         <div className="rounded border border-blue-800 p-4">
           <h2 className="text-xl font-semibold">Small to Slide</h2>
