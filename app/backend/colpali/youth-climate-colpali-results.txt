@@ -1,185 +1,93 @@
 Who is the EU commisioner for climate action?
-
-tensor([1])
-Top 1 Accuracy (verif): 0.0
 [ 1  0 25]
 
 What are the contents of the document?
-
-tensor([2])
-Top 1 Accuracy (verif): 0.0
 [ 2 12 20]
 
 Which page talks about the greenhouse effect?
-
-tensor([3])
-Top 1 Accuracy (verif): 0.0
 [3 5 6]
 
 When was the first global legally binding climate deal signed?
-
-tensor([25])
-Top 1 Accuracy (verif): 0.0
 [25 26  4]
 
 How much hotter was the earth in 2016 than the late 19th century?
-
-tensor([5])
-Top 1 Accuracy (verif): 0.0
 [5 6 7]
 
 What is the European Union's sattelite programme for observing Earth?
-
-tensor([6])
-Top 1 Accuracy (verif): 0.0
 [6 7 1]
 
 Where is the Mauna Loa observatory located?
-
-tensor([7])
-Top 1 Accuracy (verif): 0.0
 [ 7 29 13]
 
 Who was awarded a Nobel Prize for 2007?
-
-tensor([8])
-Top 1 Accuracy (verif): 0.0
 [ 8 19 26]
 
 How high was the temperature in the August 2017 heatwave?
-
-tensor([9])
-Top 1 Accuracy (verif): 0.0
 [ 9 10  5]
 
 Which countries had cyclones in 2016?
-
-tensor([10])
-Top 1 Accuracy (verif): 0.0
 [10  4 29]
 
 How much CO2 do the oceans absorb, per person?
-
-tensor([11])
-Top 1 Accuracy (verif): 0.0
 [11  6  5]
 
 How much did Venice sink in the 20th century?
-
-tensor([12])
-Top 1 Accuracy (verif): 0.0
 [12 11  5]
 
 Where in the Netherlands are they trying floating houses?
-
-tensor([13])
-Top 1 Accuracy (verif): 0.0
 [13 19 16]
 
 How much rain was there in the flood in Copenhagen in July 2011?
-
-tensor([14])
-Top 1 Accuracy (verif): 0.0
 [14 10 18]
 
 What is the longer term emissions reduction target for the EU?
-
-tensor([15])
-Top 1 Accuracy (verif): 0.0
 [15 21 17]
 
 How much of the EU budget will be spent on climate related action between 2014 and 2020?
-
-tensor([16])
-Top 1 Accuracy (verif): 0.0
 [16 15  1]
 
 What percentage of Europeans think climate change is a serious problem?
-
-tensor([17])
-Top 1 Accuracy (verif): 0.0
 [17 29  4]
 
 What proportion of the world's population lives in cities?
-
-tensor([18])
-Top 1 Accuracy (verif): 0.0
 [18 20  9]
 
 When will all new buildings in the EU be required to be zero-energy?
-
-tensor([19])
-Top 1 Accuracy (verif): 0.0
 [19 20 16]
 
 How much rubbish does the average EU resident throw away?
-
-tensor([20])
-Top 1 Accuracy (verif): 0.0
 [20 28 31]
 
 When was the EU Emissions Trading System launched?
-
-tensor([21])
-Top 1 Accuracy (verif): 0.0
 [21 26 31]
 
 How much CO2 does making one tonne of cement release?
-
-tensor([22])
-Top 1 Accuracy (verif): 0.0
 [22 21 17]
 
 What percentage of tropical deforestation is done to clear land for farms?
-
-tensor([23])
-Top 1 Accuracy (verif): 0.0
 [23 24 31]
 
 What is REDD+?
-
-tensor([24])
-Top 1 Accuracy (verif): 0.0
 [24 15 16]
 
 Who said "Our planet cannot be saved unless we leave fossil fuels in the ground where they belong." at the Paris Agreement signing cermony in April 2016?
-
-tensor([25])
-Top 1 Accuracy (verif): 0.0
 [25  4  6]
 
 What percentage of global CO2 emissions did China account for in 2016?
-
-tensor([26])
-Top 1 Accuracy (verif): 0.0
 [26 17  7]
 
 What are some things that anyone can do to make smart choices about CO2?
-
-tensor([27])
-Top 1 Accuracy (verif): 0.0
 [27 28  7]
 
 What are some ways the youth can speak up?
-
-tensor([28])
-Top 1 Accuracy (verif): 0.0
 [28 29 30]
 
 What age is Maja?
-
-tensor([29])
-Top 1 Accuracy (verif): 0.0
 [29 30  8]
 
 What ethnicity is Vappu?
-
-tensor([30])
-Top 1 Accuracy (verif): 0.0
 [30  2  7]
 
 What is on the page "Are you a climate change expert?"
-tensor([31])
-Top 1 Accuracy (verif): 0.0
 [31 29  8]
 

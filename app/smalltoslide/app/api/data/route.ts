@@ -1,7 +1,6 @@
-import {query} from '@/rag/queryToChunk';
+import { query } from "@/rag/queryToChunk";
 import { ChunkBundle, DocumentOption, RagRequestJSON } from "@/common/types";
-export const dynamic = 'force-dynamic'; // static by default, unless reading the request
-
+export const dynamic = "force-dynamic"; // static by default, unless reading the request
 
 // This is the legacy GET request
 
@@ -17,12 +16,8 @@ export const dynamic = 'force-dynamic'; // static by default, unless reading the
 //   return new Response(JSON.stringify(result));
 // }
 
-
-
-
 // This is the resulting POST request derived from the GET request
 export async function POST(request: Request) {
-
   // Example of a dummy request JSON
   // const reqJSON = {
   //     query: "How is NVDA doing?",
@@ -31,7 +26,7 @@ export async function POST(request: Request) {
 
   const reqJSON: RagRequestJSON = await request.json();
 
-  const result: ChunkBundle = await query(reqJSON.query, reqJSON.option);
+  const result = await query(reqJSON.query);
   console.log(result);
 
   //return new Response(`Hello from ${process.env.VERCEL_REGION}`);
