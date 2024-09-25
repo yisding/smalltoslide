@@ -11,7 +11,7 @@ export function Result({ images, response, context }: ResultProps) {
     <div className="flex flex-col">
       {images && (
         <>
-          <h4 className="my-2">Retrieved Slides:</h4>
+          <h4 className="my-2 font-semibold">Retrieved Slides:</h4>
           <div className="flex flex-col">
             {images.map((image, index) => (
               <img
@@ -26,8 +26,7 @@ export function Result({ images, response, context }: ResultProps) {
       )}
       {context && (
         <>
-          <h4 className="my-2">Retrieved Context:</h4>
-          <h4 className="font-semibold">Response:</h4>
+          <h4 className="my-2 font-semibold">Retrieved Context:</h4>
           <pre className="text-wrap text-sm">{context}</pre>
         </>
       )}
